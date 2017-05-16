@@ -1,4 +1,5 @@
 import Twitter     from 'twitter';
+import request     from 'request';
 import * as config from './config';
 
 const client = new Twitter({
@@ -8,10 +9,15 @@ const client = new Twitter({
     access_token_secret: config.access_token_secret
 });
 
-const stream = client.stream('statuses/filter', { track: 'galautt' });
+const stream = client.stream('statuses/filter', { track: '#GalaUTT2017' });
 
 stream.on('data', function(event) {
-    console.log(event && event.text);
+    request.post(`${config.api}/sms`, {
+        form: {
+            message: event.text,
+            from   : event.user.screen_name
+        }
+    });
 });
 
 stream.on('error', function(error) {

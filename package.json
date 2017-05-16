@@ -6,6 +6,7 @@
     "start": "gulp && node build/app"
   },
   "dependencies": {
+    "request": "^2.81.0",
     "twitter": "^1.7.0"
   },
   "devDependencies": {
