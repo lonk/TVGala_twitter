@@ -12,11 +12,13 @@ const client = new Twitter({
 const stream = client.stream('statuses/filter', { track: '#GalaUTT2017' });
 
 stream.on('data', function(event) {
-    request.post(`${config.api}/sms`, {
-        form: {
+    request.post({
+        url    : `${config.api}/sms`,
+        headers: { 'content-type': 'application/json' },
+        body   : JSON.stringify({
             message: event.text,
             from   : event.user.screen_name
-        }
+        })
     });
 });
 
